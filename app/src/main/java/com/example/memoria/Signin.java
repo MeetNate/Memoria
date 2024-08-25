@@ -8,41 +8,45 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class Signin extends AppCompatActivity {
-    private EditText name, edtpass;
+    private EditText email, edtpass;
     private Button google_sigin, submit;
     private TextView create_new_account;
+    private FirestoreHelper firestoreHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        name = findViewById(R.id.name);
+        email = findViewById(R.id.email);
         edtpass = findViewById(R.id.edtpass);
         submit = findViewById(R.id.submit);
-        google_sigin = findViewById(R.id.google_signin);
-        create_new_account=findViewById(R.id.create_new_account_);
+        google_sigin = findViewById(R.id.google_reg);
+        create_new_account = findViewById(R.id.create_new_account_);
+
+        firestoreHelper = new FirestoreHelper(); // Initialize FirestoreHelper
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String username = name.getText().toString();
-                String password = edtpass.getText().toString();
+                String username = email.getText().toString().trim();
+                String password = edtpass.getText().toString().trim();
 
-                if (username.equals("admin") && password.equals("admin")) {
-                    Intent intent = new Intent(Signin.this, Home.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(Signin.this, "Invalid input", Toast.LENGTH_SHORT).show();
+                if (username.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(Signin.this, "Please fill in both fields", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                firestoreHelper.signInUser(Signin.this, username, password);
+
+                clearFields();
             }
         });
+
         create_new_account.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,5 +54,10 @@ public class Signin extends AppCompatActivity {
                 startActivity(s);
             }
         });
+    }
+
+    private void clearFields() {
+        email.setText("");
+        edtpass.setText("");
     }
 }

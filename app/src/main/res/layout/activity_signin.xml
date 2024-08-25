@@ -8,26 +8,27 @@
     >
 
     <TextView
-        android:id="@+id/signin_ek3"
+        android:id="@+id/signin"
         android:layout_width="154dp"
         android:layout_height="62dp"
         android:fontFamily="@font/alata"
-        android:text="Signin"
+        android:text="@string/signin"
+        android:textAlignment="center"
         android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.599"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.094" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/email"
         android:layout_width="313dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alata"
-        android:hint="Name:"
+        android:hint="@string/email"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -41,7 +42,8 @@
         android:layout_width="312dp"
         android:layout_height="wrap_content"
         android:fontFamily="@font/alata"
-        android:hint="Password:"
+        android:hint="@string/password"
+        android:inputType="textPassword"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,42 +55,42 @@
 
 
     <Button
+        android:id="@+id/google_reg"
+        android:layout_width="194dp"
+        android:layout_height="49dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/google"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.662" />
+
+    <Button
         android:id="@+id/submit"
-        android:layout_width="142dp"
-        android:layout_height="wrap_content"
+        android:layout_width="194dp"
+        android:layout_height="49dp"
         android:backgroundTint="#4E8B9E"
         android:fontFamily="@font/alata"
-        android:text="Submit"
+        android:text="@string/submit"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733"
-        tools:ignore="TextSizeCheck" />
-
-    <Button
-        android:id="@+id/google_signin"
-        android:layout_width="145dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
-        android:text="Google"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.631" />
+        app:layout_constraintVertical_bias="0.746" />
 
     <TextView
         android:id="@+id/create_new_account_"
         android:layout_width="288dp"
         android:layout_height="38dp"
         android:fontFamily="@font/alata"
-        android:text="Create New Account?"
+        android:text="@string/create_new_account"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -103,7 +105,7 @@
         android:layout_width="312dp"
         android:layout_height="30dp"
         android:fontFamily="@font/alata"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.505"
