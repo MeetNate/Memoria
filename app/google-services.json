@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "120878726279",
+    "project_id": "yearbook-e5aa9",
+    "storage_bucket": "yearbook-e5aa9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:120878726279:android:7e8f691d3220a904980c22",
+        "android_client_info": {
+          "package_name": "com.example.memoria"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "120878726279-pmvut4cunknge29fem7u5minpo4jk41j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwAo-4eIQh3oMLkTqHuy0Xy6MxRJXvnmA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "120878726279-pmvut4cunknge29fem7u5minpo4jk41j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
