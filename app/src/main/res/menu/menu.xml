@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/home"
+            android:title="Home"
+            android:icon="@drawable/home_alt_3_svgrepo_com"
+            android:enabled="true"/>
+
+        <item
+            android:id="@+id/classes"
+            android:title="Classes"
+            android:icon="@drawable/category_svgrepo_com"
+            android:enabled="true"/>
+
+        <item
+            android:id="@+id/add"
+            android:title="Add"
+            android:icon="@drawable/add_ellipse_svgrepo_com"
+            android:enabled="true"/>
+
+        <item
+            android:id="@+id/singleClass"
+            android:title="Class"
+            android:icon="@drawable/layers_svgrepo_com"
+            android:enabled="true"/>
+
+
+        <item
+            android:id="@+id/message"
+            android:title="Message"
+            android:icon="@drawable/message_svgrepo_com"
+            android:enabled="true"/>
+</menu>
