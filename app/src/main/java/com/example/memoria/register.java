@@ -37,6 +37,20 @@ public class register extends AppCompatActivity {
             }
         });
 
+//        submit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String name_txt = name.getText().toString().trim();
+//                String email_txt = email.getText().toString().trim();
+//                String password_txt = password.getText().toString().trim();
+//                String phone_txt = phone.getText().toString().trim();
+//
+//                if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt, phone_txt)) {
+//                    firestoreHelper.checkUserExists(register.this, email_txt, name_txt, password_txt, phone_txt);
+//                }
+//            }
+//        });
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,10 +59,22 @@ public class register extends AppCompatActivity {
                 String password_txt = password.getText().toString().trim();
                 String phone_txt = phone.getText().toString().trim();
 
+                // Validate input fields
                 if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt, phone_txt)) {
-                    firestoreHelper.checkUserExists(register.this, email_txt, name_txt, password_txt, phone_txt);
+                    // Create an intent to start the Details activity
+                    Intent intent = new Intent(register.this, Details.class);
+
+                    // Put the data into the intent as extras
+                    intent.putExtra("name", name_txt);
+                    intent.putExtra("email", email_txt);
+                    intent.putExtra("password", password_txt);
+                    intent.putExtra("phone", phone_txt);
+
+                    // Start the Details activity
+                    startActivity(intent);
                 }
             }
         });
+
     }
 }
