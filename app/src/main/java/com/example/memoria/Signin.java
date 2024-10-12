@@ -42,7 +42,6 @@ public class Signin extends AppCompatActivity {
                 }
 
                 firestoreHelper.signInUser(Signin.this, username, password);
-
                 clearFields();
             }
         });

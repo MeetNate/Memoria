@@ -5,16 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".register"
-    >
-
+    tools:context=".Details">
 
     <TextView
-        android:id="@+id/signup_ek3"
-        android:layout_width="154dp"
-        android:layout_height="62dp"
+        android:id="@+id/studentDetails"
+        android:layout_width="326dp"
+        android:layout_height="60dp"
         android:fontFamily="@font/alata"
-        android:text="@string/signup"
+        android:text="Student Details"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="32sp"
@@ -27,11 +25,11 @@
         app:layout_constraintVertical_bias="0.064" />
 
     <EditText
-        android:id="@+id/name"
+        android:id="@+id/classVal"
         android:layout_width="316dp"
         android:layout_height="54dp"
         android:fontFamily="@font/alata"
-        android:hint="@string/name"
+        android:hint="Enter Your Class: eg-11"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -43,52 +41,20 @@
         app:layout_constraintVertical_bias="0.228" />
 
     <EditText
-        android:id="@+id/email"
+        android:id="@+id/academicYear"
         android:layout_width="316dp"
         android:layout_height="54dp"
         android:fontFamily="@font/alata"
-        android:hint="@string/email"
+        android:hint="Academic Year: eg-2020-21"
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.335" />
-
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="316dp"
-        android:layout_height="54dp"
-        android:fontFamily="@font/alata"
-        android:hint="@string/password"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.505"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.453" />
-
-    <Button
-        android:id="@+id/google_reg"
-        android:layout_width="190dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/black"
-        android:text="@string/google"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.654" />
-
+        app:layout_constraintVertical_bias="0.333" />
 
     <Button
         android:id="@+id/submit"
@@ -102,24 +68,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.756" />
+        app:layout_constraintVertical_bias="0.472" />
 
-    <TextView
-        android:id="@+id/already_have_account"
-        android:layout_width="235dp"
-        android:layout_height="48dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:fontFamily="@font/alata"
-        android:text="@string/already_have_a_account"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.272"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.562" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

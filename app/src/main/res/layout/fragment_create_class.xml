@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".createClass"
+    android:background="@drawable/gradient">
+
+    <!-- ScrollView to make the content scrollable -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Class Title -->
+            <TextView
+                android:id="@+id/classVal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alata"
+                android:text="Create"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="50dp" />
+
+            <!-- Class Name -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Create New Class:"
+                android:layout_marginLeft="5dp" />
+
+            <EditText
+                android:id="@+id/classNameEditText"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/alata"
+                android:layout_height="46dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/rounded_edittext"
+                android:hint="eg: 11"
+                android:inputType="text"
+                android:paddingLeft="20dp"
+                android:paddingBottom="5dp" />
+
+
+            <!-- Academic Year -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:fontFamily="@font/alata"
+                android:text="Academic Year:"
+                android:layout_marginLeft="5dp" />
+
+            <EditText
+                android:id="@+id/academicYearEditText"
+                android:layout_width="match_parent"
+                android:fontFamily="@font/alata"
+                android:layout_height="46dp"
+                android:hint="eg: 2020-21"
+                android:inputType="text"
+                android:background="@drawable/rounded_edittext"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="16dp"
+                android:paddingLeft="20dp"
+                android:paddingBottom="5dp" />
+
+            <!-- Create Button -->
+            <Button
+                android:id="@+id/createClassButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/alata"
+                android:layout_gravity="center"
+                android:background="@drawable/rounded_button"
+                android:text="Create Class"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="50dp"
+            android:paddingLeft="20dp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>
