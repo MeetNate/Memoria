@@ -25,7 +25,6 @@ public class register extends AppCompatActivity {
         name = findViewById(R.id.name);
         password = findViewById(R.id.password);
         email = findViewById(R.id.email);
-        phone = findViewById(R.id.phone);
         submit = findViewById(R.id.submit);
         google_reg = findViewById(R.id.google_reg);
         already_have_account = findViewById(R.id.already_have_account);
@@ -57,10 +56,9 @@ public class register extends AppCompatActivity {
                 String name_txt = name.getText().toString().trim();
                 String email_txt = email.getText().toString().trim();
                 String password_txt = password.getText().toString().trim();
-                String phone_txt = phone.getText().toString().trim();
 
                 // Validate input fields
-                if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt, phone_txt)) {
+                if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt)) {
                     // Create an intent to start the Details activity
                     Intent intent = new Intent(register.this, Details.class);
 
@@ -68,7 +66,6 @@ public class register extends AppCompatActivity {
                     intent.putExtra("name", name_txt);
                     intent.putExtra("email", email_txt);
                     intent.putExtra("password", password_txt);
-                    intent.putExtra("phone", phone_txt);
 
                     // Start the Details activity
                     startActivity(intent);

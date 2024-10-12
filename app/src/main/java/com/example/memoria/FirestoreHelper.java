@@ -5,15 +5,10 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -27,9 +22,11 @@ public class FirestoreHelper {
     private static final String USERS_COLLECTION = "users";
     private static final String TAG = "FirestoreHelper";
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    UserSession userSession = UserSession.getInstance();
+
 
     // Check if the user exists
-    public void checkUserExists(final Context context, final String email, final String name, final String password, final String phoneNo, final String classVal, final String academicYear, final String classDiv) {
+    public void checkUserExists(final Context context, final String email, final String name, final String password, final String classVal, final String academicYear) {
         if (email == null || email.isEmpty()) {
             showToast(context, "Email cannot be null or empty");
             return; // Prevent proceeding with null or empty email
@@ -41,7 +38,7 @@ public class FirestoreHelper {
                 if (document != null && document.exists()) {
                     showToast(context, "User already exists");
                 } else {
-                    registerUser(context, email, name, password, phoneNo, classVal, academicYear, classDiv);
+                    registerUser(context, email, name, password, classVal, academicYear);
                 }
             } else {
                 handleError(context, task.getException(), "Failed to check if user exists");
@@ -50,14 +47,15 @@ public class FirestoreHelper {
     }
 
     // Register a new user with class list details
-    private void registerUser(final Context context, final String email, final String name, final String password, final String phoneNo, final String classVal, final String academicYear, final String classDiv) {
-        Map<String, Object> user = createUserDataMap(name, email, password, phoneNo, classVal, academicYear, classDiv);
+    private void registerUser(final Context context, final String email, final String name, final String password, final String classVal, final String academicYear) {
+        Map<String, Object> user = createUserDataMap(name, email, password, classVal, academicYear);
 
+        userSession.clearClassList();
         db.collection(USERS_COLLECTION).document(email)
                 .set(user)
                 .addOnSuccessListener(aVoid -> {
                     showToast(context, "User registered successfully");
-                    setUserData(email, name,classVal, academicYear,classDiv);
+                    setUserData(email, name,classVal, academicYear);
                     Intent intent = new Intent(context, Home.class);
                     context.startActivity(intent);
                 })
@@ -65,21 +63,19 @@ public class FirestoreHelper {
     }
 
     // Create a map of user data, with class list as an array of objects
-    private Map<String, Object> createUserDataMap(String name, String email, String password, String phoneNo, String classVal, String academicYear, String classDiv) {
+    private Map<String, Object> createUserDataMap(String name, String email, String password, String classVal, String academicYear) {
         Map<String, Object> user = new HashMap<>();
 
         // Basic user details
         user.put("name", name);
         user.put("email", email);
         user.put("password", password);
-        user.put("phoneNo", phoneNo);
 
         // Class list as an array of objects
         List<Map<String, Object>> classList = new ArrayList<>();
         Map<String, Object> classDetails = new HashMap<>();
         classDetails.put("classVal", classVal);
         classDetails.put("academicYear", academicYear);
-        classDetails.put("division", classDiv);
         classList.add(classDetails);
 
         // Add classList to user data
@@ -106,6 +102,7 @@ public class FirestoreHelper {
             return; // Prevent proceeding with null or empty email
         }
 
+        userSession.clearClassList();
         db.collection(USERS_COLLECTION).document(email).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -117,18 +114,24 @@ public class FirestoreHelper {
                         String userEmail = document.getString("email");
                         List<Map<String, Object>> classList = (List<Map<String, Object>>) document.get("classList");
 
+                        // Store user data in UserSession
+                        userSession.setUserName(userName);
+                        userSession.setUserEmail(userEmail);
+
                         if (classList != null && !classList.isEmpty()) {
-                            Map<String, Object> classDetails = classList.get(0); // Assuming first entry is the current class
-                            String userClass = (String) classDetails.get("classVal");
-                            String userAcademicYear = (String) classDetails.get("academicYear");
-                            String userClassDiv = (String) classDetails.get("division");
+                            // Fetch and store all class details
+                            for (Map<String, Object> classDetails : classList) {
+                                String userClass = (String) classDetails.get("classVal");
+                                String userAcademicYear = (String) classDetails.get("academicYear");
 
-                            // Store user data in UserSession
-                            UserSession userSession = UserSession.getInstance();
-                            userSession.setUserName(userName);
-                            userSession.setUserEmail(userEmail);
-                            userSession.setClassDetails(userClass, userAcademicYear, userClassDiv);
+                                // Add class details to the UserSession
+                                userSession.addClassToList(userClass, userAcademicYear);
+                            }
 
+                            // Optionally, set the first class details as current class
+                            Map<String, Object> firstClassDetails = classList.get(0);
+                            userSession.setClassDetails((String) firstClassDetails.get("classVal"),
+                                    (String) firstClassDetails.get("academicYear"));
                         }
 
                         // Redirect to Home
@@ -163,18 +166,36 @@ public class FirestoreHelper {
                     if (task.isSuccessful()) {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            // User exists, proceed with the update
+                            // User exists, retrieve the current classList
+                            List<Map<String, Object>> classList = (List<Map<String, Object>>) document.get("classList");
+                            if (classList == null) {
+                                classList = new ArrayList<>(); // Initialize if null
+                            }
+
+                            boolean classExists = false;
+                            String academicYear = user.getAcademicYear();
+
+                            // Check if the class already exists and update it
+                            for (Map<String, Object> classDetails : classList) {
+                                if (academicYear.equals(classDetails.get("academicYear"))) {
+                                    classDetails.put("classVal", classVal);
+                                    classExists = true;
+                                    break;
+                                }
+                            }
+
+                            // If the class does not exist, add a new entry
+                            if (!classExists) {
+                                Map<String, Object> newClassDetails = new HashMap<>();
+                                newClassDetails.put("classVal", classVal);
+                                newClassDetails.put("academicYear", academicYear);
+                                classList.add(newClassDetails);
+                            }
+
+                            // Prepare the updated user data
                             Map<String, Object> updatedUser = new HashMap<>();
                             updatedUser.put("name", name);
                             updatedUser.put("email", email);
-
-                            // Update the classList with the new details
-                            List<Map<String, Object>> classList = new ArrayList<>();
-                            Map<String, Object> classDetails = new HashMap<>();
-                            classDetails.put("classVal", classVal);
-                            classDetails.put("academicYear", user.getAcademicYear());
-                            classDetails.put("division", user.getDivision());
-                            classList.add(classDetails);
                             updatedUser.put("classList", classList);
 
                             // Update the user's data in Firestore
@@ -185,7 +206,8 @@ public class FirestoreHelper {
                                         // Update the user data in the singleton
                                         user.setUserName(name);
                                         user.setUserEmail(email);
-                                        user.setClassDetails(classVal, user.getAcademicYear(), user.getDivision());
+                                        user.setClassDetails(classVal, academicYear);
+
                                     })
                                     .addOnFailureListener(e -> handleError(context, e, "Failed to update user data"));
                         } else {
@@ -199,7 +221,7 @@ public class FirestoreHelper {
                 });
     }
 
-    public void createNewClass(final Context context, final String classVal, final String division, final String academicYear) {
+    public void createNewClass(final Context context, final String classVal, final String academicYear) {
         UserSession userSession = UserSession.getInstance();
         String userEmail = userSession.getUserEmail(); // Get the user's email from the session
 
@@ -224,7 +246,6 @@ public class FirestoreHelper {
                             Map<String, Object> newClass = new HashMap<>();
                             newClass.put("classVal", classVal);
                             newClass.put("academicYear", academicYear);
-                            newClass.put("division", division);
 
                             // Add the new class to the list
                             classList.add(newClass);
@@ -235,7 +256,7 @@ public class FirestoreHelper {
                                     .addOnSuccessListener(aVoid -> {
                                         showToast(context, "New class added successfully");
                                         // Optionally update the user session
-                                        userSession.addClassToList(classVal, division, academicYear);
+                                        userSession.addClassToList(classVal, academicYear);
                                     })
                                     .addOnFailureListener(e -> handleError(context, e, "Failed to update class list"));
                         } else {
@@ -255,21 +276,10 @@ public class FirestoreHelper {
     }
 
     //set userdata for display
-    private void setUserData(final String email, final String name, final String classVal, final String academicYear, final String classDiv){
+    private void setUserData(final String email, final String name, final String classVal, final String academicYear){
         UserSession userSession = UserSession.getInstance();
         userSession.setUserName(name);
         userSession.setUserEmail(email);
-        userSession.setClassDetails(classVal, academicYear,classDiv);
-    }
-    // Define the callback interface for fetching all users
-    public interface FirestoreUsersCallback {
-        void onCallback(List<Map<String, Object>> usersList);
-        void onFailure(String message);
-    }
-
-    // FirestoreCallback interface
-    public interface FirestoreCallback {
-        void onCallback(String name, String email, String classVal);
-        void onFailure(String message);
+        userSession.setClassDetails(classVal, academicYear);
     }
 }

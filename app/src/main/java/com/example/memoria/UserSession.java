@@ -10,13 +10,15 @@ public class UserSession {
     private String userName;
     private String userEmail;
     private String userPassword;
-    private Map<String, String> classDetails; // Map for class, academic year, and division
+    private Map<String, String> classDetails; // Map for class, academic year
     private List<String> groupChats; // List for group chat IDs or names
-    private List<Map<String, String>> classList = new ArrayList<>(); // Holds list of classes
+    private List<Map<String, String>> classList; // Holds list of classes
 
     // Private constructor to prevent instantiation
     private UserSession() {
         classDetails = new HashMap<>(); // Initialize classDetails map
+        classList = new ArrayList<>(); // Initialize classList
+        groupChats = new ArrayList<>(); // Initialize groupChats
     }
 
     public static UserSession getInstance() {
@@ -71,24 +73,26 @@ public class UserSession {
         this.groupChats = groupChats;
     }
 
-    // Convenience method to set class details (class, academic year, division)
-    public void setClassDetails(String classVal, String academicYear, String division) {
+    // Convenience method to set class details (class, academic year)
+    public void setClassDetails(String classVal, String academicYear) {
         if (this.classDetails == null) {
             this.classDetails = new HashMap<>(); // Ensure classDetails map is initialized
         }
         this.classDetails.put("classVal", classVal);
         this.classDetails.put("academicYear", academicYear);
-        this.classDetails.put("division", division);
     }
 
-
-    // Method to add a new class to the list
-    public void addClassToList(String classVal, String division, String academicYear) {
+    // Method to add a new class to the user's class list
+    public void addClassToList(String classVal, String academicYear) {
         Map<String, String> newClass = new HashMap<>();
         newClass.put("classVal", classVal);
-        newClass.put("division", division);
         newClass.put("academicYear", academicYear);
         classList.add(newClass);
+    }
+
+    // Method to clear the current user's class list
+    public void clearClassList() {
+        classList.clear(); // Clear the list to prevent duplication
     }
 
     // Convenience method to get specific class details
@@ -98,9 +102,5 @@ public class UserSession {
 
     public String getAcademicYear() {
         return classDetails != null ? classDetails.get("academicYear") : null;
-    }
-
-    public String getDivision() {
-        return classDetails != null ? classDetails.get("division") : null;
     }
 }

@@ -53,27 +53,6 @@
                 android:paddingLeft="20dp"
                 android:paddingBottom="5dp" />
 
-            <!-- Division -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="20dp"
-                android:fontFamily="@font/alata"
-                android:text="Division:"
-                android:layout_marginLeft="5dp" />
-
-            <EditText
-                android:id="@+id/classDivision"
-                android:layout_width="match_parent"
-                android:fontFamily="@font/alata"
-                android:layout_height="46dp"
-                android:hint="eg: 11-C"
-                android:inputType="text"
-                android:background="@drawable/rounded_edittext"
-                android:layout_marginBottom="16dp"
-                android:layout_marginTop="16dp"
-                android:paddingLeft="20dp"
-                android:paddingBottom="5dp" />
 
             <!-- Academic Year -->
             <TextView
@@ -107,7 +86,7 @@
                 android:background="@drawable/rounded_button"
                 android:text="Create Class"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp" 
+                android:layout_marginBottom="50dp"
             android:paddingLeft="20dp" />
 
         </LinearLayout>

@@ -63,7 +63,7 @@ public class Profile extends AppCompatActivity {
         logoutTextView.setOnClickListener(v -> {
             userSession.setUserName(null);
             userSession.setUserEmail(null);
-            userSession.setClassDetails(null, null, null); // Resetting class details
+            userSession.setClassDetails(null, null); // Resetting class details
 
             new AlertDialog.Builder(Profile.this)
                     .setTitle("Logout")
@@ -101,7 +101,7 @@ public class Profile extends AppCompatActivity {
                 String updatedName = editName.getText().toString();
 
                 // Set the updated class details in UserSession (only classVal is stored)
-                userSession.setClassDetails(updatedClass, userSession.getAcademicYear(), userSession.getDivision()); // Only updating classVal
+                userSession.setClassDetails(updatedClass, userSession.getAcademicYear()); // Only updating classVal
                 userSession.setUserEmail(updatedEmail);
                 userSession.setUserName(updatedName);
 

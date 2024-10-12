@@ -13,7 +13,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class Details extends AppCompatActivity {
 
-    private EditText classVal, academicYear, classDiv;
+    private EditText classVal, academicYear;
     private Button submit;
     private FirestoreHelper firestoreHelper = new FirestoreHelper();
 
@@ -30,22 +30,19 @@ public class Details extends AppCompatActivity {
 
         classVal = findViewById(R.id.classVal);
         academicYear = findViewById(R.id.academicYear);
-        classDiv = findViewById(R.id.classDiv);
         submit = findViewById(R.id.submit);
 
 
         String name = getIntent().getStringExtra("name");
         String email = getIntent().getStringExtra("email");
         String password = getIntent().getStringExtra("password");
-        String phone = getIntent().getStringExtra("phone");
 
         submit.setOnClickListener(v -> {
             String classVal_txt = classVal.getText().toString().trim();
                 String academicYear_txt = academicYear.getText().toString().trim();
-                String classDiv_txt = classDiv.getText().toString().trim();
 
-                if (ValidationHelper.validateInputs(Details.this, name, email, password, phone)) {
-                    firestoreHelper.checkUserExists(Details.this, email, name, password, phone, classVal_txt,academicYear_txt, classDiv_txt);
+                if (ValidationHelper.validateInputs(Details.this, name, email, password)) {
+                    firestoreHelper.checkUserExists(Details.this, email, name, password, classVal_txt,academicYear_txt);
                 }
         });
     }

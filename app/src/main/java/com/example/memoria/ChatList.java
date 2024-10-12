@@ -8,37 +8,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import java.util.List;
 import java.util.Map;
 
-public class Classes extends Fragment {
+public class ChatList extends Fragment {
 
-    UserSession userSession = UserSession.getInstance();
-    private TextView academic_class, academic_year;
     private ImageButton profileBtn;
     private LinearLayout classButtonContainer; // Container for class buttons
+    private Button classBtn; // Single Button instance
+    private UserSession userSession = UserSession.getInstance();
 
-    @SuppressLint({"WrongViewCast", "MissingInflatedId"})
+    @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_classes, container, false);
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
         profileBtn = view.findViewById(R.id.profilebtn);
-        academic_class = view.findViewById(R.id.academic_class);
-        academic_year = view.findViewById(R.id.academic_year);
         classButtonContainer = view.findViewById(R.id.classButtonContainer); // Initialize the button container
-
-        // Display data using updated methods
-        academic_class.setText(userSession.getClassVal());
-        academic_year.setText(userSession.getAcademicYear());
 
         // Create class buttons dynamically
         populateClassButtons();
@@ -61,14 +54,6 @@ public class Classes extends Fragment {
         // Clear any existing buttons
         classButtonContainer.removeAllViews();
 
-        // Create a GridLayout for the class buttons
-        GridLayout classGrid = new GridLayout(getActivity());
-        classGrid.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, // Width
-                LinearLayout.LayoutParams.WRAP_CONTENT // Height
-        ));
-        classGrid.setColumnCount(2); // Set number of columns
-
         // Create a button for each class
         if (classList != null && !classList.isEmpty()) {
             for (Map<String, String> classDetails : classList) {
@@ -78,17 +63,15 @@ public class Classes extends Fragment {
                 Log.d("ChatList", "Class Value: " + classVal);
 
                 // Create a new instance for classBtn for each iteration
-                Button classBtn = new Button(getActivity());
+                classBtn = new Button(getActivity());
 
                 // Set text for classBtn
-                classBtn.setText(classVal);
+                classBtn.setText("Class " + classVal);
 
-                // Create layout params for the button with fixed size
-                GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
-                layoutParams.setMargins(20, 16, 20, 16); // Set margin values (left, top, right, bottom)
-                layoutParams.width = 300; // Set fixed width
-                layoutParams.height = 200; // Set fixed height
-                layoutParams.columnSpec = GridLayout.spec(GridLayout.UNDEFINED, 1f); // Set to fill the column equally
+                // Create layout params with margins
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(330, 170);
+                layoutParams.setMargins(20, 16, 16, 16); // Set margin values (left, top, right, bottom)
+                classBtn.setTextSize(15);
 
                 // Set the layout parameters to the button
                 classBtn.setLayoutParams(layoutParams);
@@ -104,16 +87,12 @@ public class Classes extends Fragment {
                     startActivity(intent);
                 });
 
-                // Add the button to the classGrid
-                classGrid.addView(classBtn);
+                // Add the button to the container
+                classButtonContainer.addView(classBtn);
             }
         } else {
-            Log.d("ChatList", "No classes available");
+            // Debug: No classes available
+            Log.d("ChatList", "No classes available in classList");
         }
-
-        // Clear any previous GridLayout before adding
-        classButtonContainer.removeAllViews();
-        // Add the GridLayout to the classButtonContainer
-        classButtonContainer.addView(classGrid);
     }
 }

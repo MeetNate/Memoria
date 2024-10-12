@@ -75,22 +75,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.453" />
 
-    <EditText
-        android:id="@+id/phone"
-        android:layout_width="316dp"
-        android:layout_height="54dp"
-        android:fontFamily="@font/alata"
-        android:hint="@string/phone_number"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
-
     <Button
         android:id="@+id/google_reg"
         android:layout_width="190dp"
@@ -100,10 +84,11 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.488"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.777" />
+        app:layout_constraintVertical_bias="0.654" />
+
 
     <Button
         android:id="@+id/submit"
@@ -117,26 +102,24 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.868" />
-
-
+        app:layout_constraintVertical_bias="0.756" />
 
     <TextView
         android:id="@+id/already_have_account"
         android:layout_width="235dp"
         android:layout_height="48dp"
-        android:fontFamily="@font/alata"
-        android:text="@string/already_have_a_account"
         android:clickable="true"
         android:focusable="true"
+        android:fontFamily="@font/alata"
+        android:text="@string/already_have_a_account"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.272"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.678" />
+        app:layout_constraintVertical_bias="0.562" />
 </androidx.constraintlayout.widget.ConstraintLayout>

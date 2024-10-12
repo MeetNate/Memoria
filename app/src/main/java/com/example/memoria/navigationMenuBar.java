@@ -1,9 +1,7 @@
 package com.example.memoria;
 
-import android.content.Context;
 import android.content.Intent;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
@@ -26,7 +24,7 @@ public class navigationMenuBar {
                 // Handle classes fragment (uncomment if needed)
                  selectedFragment = new Classes();
             } else if (id == R.id.message) {
-                selectedFragment = new Message();
+                selectedFragment = new ChatList();
             } else if (id == R.id.singleClass) {
                 selectedFragment = new singleClass();
             } else if (id == R.id.add) {

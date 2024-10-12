@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class createClass extends Fragment {
 
-    private EditText classNameEditText, academicYearEditText, classDivisionEditText;
+    private EditText classNameEditText, academicYearEditText;
     private Button createClassButton;
     private FirestoreHelper firestoreHelper;
 
@@ -27,7 +27,6 @@ public class createClass extends Fragment {
         // Initialize views
         classNameEditText = view.findViewById(R.id.classNameEditText);
         academicYearEditText = view.findViewById(R.id.academicYearEditText);
-        classDivisionEditText = view.findViewById(R.id.classDivision);
         createClassButton = view.findViewById(R.id.createClassButton);
 
         firestoreHelper = new FirestoreHelper();
@@ -38,15 +37,13 @@ public class createClass extends Fragment {
                 // Proceed only if validation is successful
                 String className = classNameEditText.getText().toString().trim();
                 String academicYear = academicYearEditText.getText().toString().trim();
-                String classDivision = classDivisionEditText.getText().toString().trim();
 
                 // Create new class and close fragment on success
-                firestoreHelper.createNewClass(getContext(), className, academicYear, classDivision);
+                firestoreHelper.createNewClass(getContext(), className, academicYear);
 
                 // Clear input fields
                 classNameEditText.setText("");
                 academicYearEditText.setText("");
-                classDivisionEditText.setText("");
 
                 showSuccessDialog();  // Show success dialog after creating the class
             }
@@ -59,10 +56,9 @@ public class createClass extends Fragment {
     private boolean validateFields() {
         String className = classNameEditText.getText().toString().trim();
         String academicYear = academicYearEditText.getText().toString().trim();
-        String classDivision = classDivisionEditText.getText().toString().trim();
 
         // Check if fields are empty
-        if (className.isEmpty() || academicYear.isEmpty() || classDivision.isEmpty()) {
+        if (className.isEmpty() || academicYear.isEmpty()) {
             showErrorDialog("All fields are required.");
             return false;
         }
@@ -82,12 +78,6 @@ public class createClass extends Fragment {
         // Validate academic year format (e.g., 2020-21)
         if (!Pattern.matches("\\d{4}-\\d{2}", academicYear)) {
             showErrorDialog("Academic year must be in the format 'YYYY-YY' (e.g., 2020-21).");
-            return false;
-        }
-
-        // Validate class division format (e.g., 11-C)
-        if (!Pattern.matches("\\d{1,2}-[A-Z]", classDivision)) {
-            showErrorDialog("Class division must be in the format 'X-Y' (e.g., 11-C).");
             return false;
         }
 

@@ -17,7 +17,7 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class Home extends AppCompatActivity {
 
-    private ImageButton profileBtn, menuBtn;
+    private ImageButton profileBtn;
     NavigationBarView navigationMenu;
     private TextView academic_class, academic_year;
     private navigationMenuBar navigation;
@@ -39,7 +39,6 @@ public class Home extends AppCompatActivity {
 
         // Initialize views
         profileBtn = findViewById(R.id.profilebtn);
-        menuBtn = findViewById(R.id.menu);
         navigationMenu = findViewById(R.id.bottomNavigationView);
         academic_class = findViewById(R.id.academic_class);
         academic_year = findViewById(R.id.academic_year);

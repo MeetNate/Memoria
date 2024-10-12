@@ -13,11 +13,10 @@ public class ValidationHelper {
     private static final int PHONE_LENGTH = 10;
     private static final int MIN_PASSWORD_LENGTH = 8;
 
-    public static boolean validateInputs(Context context, String name, String email, String password, String phone) {
+    public static boolean validateInputs(Context context, String name, String email, String password) {
         if (!isValidName(context, name)) return false;
         if (!isValidEmail(context, email)) return false;
         if (!isValidPassword(context, password)) return false;
-        if (!isValidPhone(context, phone)) return false;
 
         return true;
     }
@@ -52,13 +51,6 @@ public class ValidationHelper {
         return true;
     }
 
-    private static boolean isValidPhone(Context context, String phone) {
-        if (TextUtils.isEmpty(phone) || phone.length() != PHONE_LENGTH || !TextUtils.isDigitsOnly(phone)) {
-            showToast(context, "Please enter a valid " + PHONE_LENGTH + "-digit phone number");
-            return false;
-        }
-        return true;
-    }
 
     private static void showToast(Context context, String message) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
