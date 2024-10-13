@@ -3,45 +3,60 @@ package com.example.memoria;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.android.material.navigation.NavigationBarView;
+
+import Helper.UserSession;
+import ReusableClass.navigationMenuBar;
 
 public class Home extends AppCompatActivity {
 
-    private TextView nameTextView;
+    private ImageButton profileBtn;
+    NavigationBarView navigationMenu;
+    private TextView academic_class, academic_year;
+    private navigationMenuBar navigation;
+    UserSession userSession = UserSession.getInstance();
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_home);
+
+        // Apply window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        nameTextView = findViewById(R.id.nameTextView);
+        // Initialize views
+        profileBtn = findViewById(R.id.profilebtn);
+        navigationMenu = findViewById(R.id.bottomNavigationView);
+        academic_class = findViewById(R.id.academic_class);
+        academic_year = findViewById(R.id.academic_year);
+        navigation = new navigationMenuBar();
 
-        //displaying user data
-        Intent intent = getIntent();
-        String name = intent.getStringExtra("name");
+        // Display data from UserSession
+        academic_class.setText(userSession.getClassVal());  // Update based on new class details method
+        academic_year.setText(userSession.getAcademicYear());  // Update based on new class details method
 
-        if (name != null) {
-            nameTextView.setText(name);
-        }
+        // Profile button navigation
+        profileBtn.setOnClickListener(v -> {
+            Intent profileIntent = new Intent(Home.this, Profile.class);
+            startActivity(profileIntent);
+        });
+
+        // Initialize navigation menu
+        navigation.menuBar(navigationMenu, Home.this);
     }
 }

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatList"
+    android:background="@drawable/gradient">
+
+    <!-- Main Constraint Layout -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Background Image on the Right Side -->
+        <ImageView
+            android:id="@+id/backgroundImage"
+            android:layout_width="167dp"
+            android:layout_height="525dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/chatlist_men"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="200dp"/> <!-- Optional: Adjust transparency -->
+
+        <!-- Title TextView -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/alata"
+            android:text="Chats"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.064" />
+
+        <!-- Profile Button -->
+        <ImageButton
+            android:id="@+id/profilebtn"
+            android:layout_width="55dp"
+            android:layout_height="48dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/baseline_person_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.955"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.061"
+            android:background="?attr/selectableItemBackgroundBorderless"/>
+
+        <!-- Class Button Container -->
+        <LinearLayout
+            android:id="@+id/classButtonContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:layout_constraintVertical_bias="0.036"
+            >
+
+            <Button
+                android:id="@+id/classBtn"
+                android:layout_width="247dp"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/bg_blue"
+                android:fontFamily="@font/alata"
+                android:text="Yearbook"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.616"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.299" />
+        </LinearLayout>
+
+        <!-- Chat Layout Frame -->
+        <FrameLayout
+            android:id="@+id/chatLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp"></FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

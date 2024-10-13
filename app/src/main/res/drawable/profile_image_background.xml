@@ -1,0 +1,14 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <solid android:color="#4E8B9E" /> <!-- Blue background inside the shape -->
+
+    <corners android:radius="50dp" /> <!-- Adjust this to make the edges round -->
+
+    <padding
+        android:left="10dp"
+        android:top="10dp"
+        android:right="10dp"
+        android:bottom="10dp" />
+
+</shape>

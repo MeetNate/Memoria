@@ -8,8 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import Helper.FirestoreHelper;
 
 public class Signin extends AppCompatActivity {
     private EditText email, edtpass;
@@ -42,7 +43,6 @@ public class Signin extends AppCompatActivity {
                 }
 
                 firestoreHelper.signInUser(Signin.this, username, password);
-
                 clearFields();
             }
         });
