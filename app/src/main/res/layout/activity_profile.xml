@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
@@ -8,28 +9,32 @@
     android:background="@drawable/gradient"
     tools:context=".Profile">
 
+    <!-- Profile Title -->
+
+    <!-- Back Button -->
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="96dp"
         android:fontFamily="@font/alata"
         android:text="Profile"
         android:textSize="30dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/top_menu"
-        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toEndOf="@+id/backbtn"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.051" />
 
     <ImageButton
         android:id="@+id/backbtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="   "
+        android:contentDescription="Back"
         android:scaleType="center"
         android:src="@drawable/zzzz"
+        android:background="?attr/selectableItemBackgroundBorderless"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.069"
@@ -37,97 +42,106 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.046" />
 
-    <!--Imageview add kari dejo for avtaar change
-
-   <ImageButton
-       android:id="@+id/avtaar"
-       android:layout_width="150dp"
-       android:layout_height="150dp"
-       android:src="Add image from database"
-       app:layout_constraintBottom_toBottomOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintHorizontal_bias="0.16"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintVertical_bias="0.222"/>
-       -->
+    <!-- Avatar Image Button with custom shape background -->
 
     <ImageButton
-        android:id="@+id/top_menu"
+        android:id="@+id/logout"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:contentDescription="   "
-        android:src="@drawable/baseline_menu_24"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Back"
+        android:scaleType="center"
+        android:src="@drawable/baseline_logout_24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
+        app:layout_constraintHorizontal_bias="0.922"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.045" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alata"
-        android:text="Name:"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.625"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.195" />
+    <ImageButton
+android:id="@+id/avtaar"
+android:layout_width="150dp"
+android:layout_height="150dp"
+android:scaleType="centerInside"
+android:src="@drawable/profile_men"
+    android:background="@drawable/profile_image_background"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.16"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintVertical_bias="0.222" />
 
-    <TextView
-        android:id="@+id/name_profile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/alata"
-        android:text="Enter your name"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.832"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267" />
 
-    <EditText
-        android:id="@+id/editNameView"
-        android:layout_width="133dp"
-        android:layout_height="46dp"
-        android:fontFamily="@font/alata"
-        android:textSize="20dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.787"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.272"
+    <!-- Name Label -->
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:fontFamily="@font/alata"
+android:text="Name:"
+android:textSize="20dp"
+android:textStyle="bold"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintHorizontal_bias="0.625"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintVertical_bias="0.195" />
 
-        />
+    <!-- Name Display -->
+<TextView
+android:id="@+id/name_profile"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:fontFamily="@font/alata"
+android:text="Enter your name"
+android:textSize="20dp"
+android:textStyle="bold"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintHorizontal_bias="0.832"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintVertical_bias="0.267" />
 
+    <!-- Name EditText (Initially Hidden) -->
+<EditText
+android:id="@+id/editNameView"
+android:layout_width="133dp"
+android:layout_height="46dp"
+android:fontFamily="@font/alata"
+android:textSize="20dp"
+android:visibility="gone"
+app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintEnd_toEndOf="parent"
+app:layout_constraintHorizontal_bias="0.787"
+app:layout_constraintStart_toStartOf="parent"
+app:layout_constraintTop_toTopOf="parent"
+app:layout_constraintVertical_bias="0.272" />
+
+    <!-- CardView for Update and Logout Options -->
     <androidx.cardview.widget.CardView
         android:id="@+id/update_logout"
-        android:layout_width="328dp"
-        android:layout_height="362dp"
+        android:layout_width="355dp"
+        android:layout_height="386dp"
         android:backgroundTint="@color/bg_blue"
         app:cardCornerRadius="25dp"
         app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.814">
+        app:layout_constraintVertical_bias="0.896">
 
+        <!-- Inside the CardView: Layout and content -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="336dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <!-- Email Label and Value -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -149,6 +163,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
+            <!-- Email EditText (Initially Hidden) -->
             <EditText
                 android:id="@+id/editEmailView"
                 android:layout_width="219dp"
@@ -159,6 +174,7 @@
                 android:textSize="20dp"
                 android:visibility="gone" />
 
+            <!-- Class Label and Value -->
             <TextView
                 android:id="@+id/class_profile"
                 android:layout_width="wrap_content"
@@ -181,9 +197,7 @@
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
-            <!-- Use the rounded background -->
-
-
+            <!-- Class EditText (Initially Hidden) -->
             <EditText
                 android:id="@+id/editClassView"
                 android:layout_width="219dp"
@@ -194,6 +208,19 @@
                 android:textSize="20sp"
                 android:visibility="gone" />
 
+
+            <TextView
+                android:id="@+id/classroomId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/alata"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:layout_marginRight="10dp"/>
+
+            <!-- Update Button -->
             <Button
                 android:id="@+id/updatebtn"
                 android:layout_width="150dp"
@@ -206,20 +233,19 @@
                 android:textColor="@color/black"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/logout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="20dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:fontFamily="@font/alata"
-                android:text="Logout?"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+            <!--        &lt;!&ndash; Logout Text &ndash;&gt;-->
+            <!--        <TextView-->
+            <!--            android:id="@+id/logout"-->
+            <!--            android:layout_width="wrap_content"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:layout_marginLeft="25dp"-->
+            <!--            android:layout_marginTop="20dp"-->
+            <!--            android:clickable="true"-->
+            <!--            android:focusable="true"-->
+            <!--            android:fontFamily="@font/alata"-->
+            <!--            android:text="Logout?"-->
+            <!--            android:textSize="20dp"-->
+            <!--            android:textStyle="bold" />-->
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

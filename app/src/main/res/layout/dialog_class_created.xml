@@ -1,32 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!-- res/layout/dialog_show_class_id.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:orientation="vertical">
 
     <TextView
-        android:id="@+id/dialogTitle"
+        android:id="@+id/generatedClassIdTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Class Created"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-    android:paddingBottom="10dp" />
-
-    <TextView
-        android:id="@+id/dialogMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Class created successfully"
+        android:text="Generated Class ID"
         android:textSize="16sp"
-        android:textColor="@color/black" /> <!-- Set to your preferred color -->
+        android:layout_marginBottom="8dp" />
 
     <Button
-        android:id="@+id/dialogButton"
-        android:layout_width="match_parent"
+        android:id="@+id/copyClassIdButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OK"
-        android:background="@color/black"
-    android:textColor="@android:color/white"
-    android:layout_marginTop="20dp"/>
+        android:text="Copy" />
 
 </LinearLayout>

@@ -5,7 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Details">
+    tools:context=".Details"
+    android:background="@drawable/gradient">
 
     <TextView
         android:id="@+id/studentDetails"

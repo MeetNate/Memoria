@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import Helper.UserSession;
+
 public class singleClass extends Fragment {
 
     // Get the instance of UserSession

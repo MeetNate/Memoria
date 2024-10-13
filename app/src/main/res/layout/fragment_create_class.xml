@@ -76,6 +76,15 @@
                 android:paddingLeft="20dp"
                 android:paddingBottom="5dp" />
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If you have class link.."
+                android:fontFamily="@font/alata"
+                android:textSize="20dp"
+                android:id="@+id/classId"
+                />
+
             <!-- Create Button -->
             <Button
                 android:id="@+id/createClassButton"

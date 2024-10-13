@@ -12,9 +12,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.List;
 import java.util.Map;
+
+import Helper.UserSession;
 
 public class ChatList extends Fragment {
 
@@ -69,7 +73,7 @@ public class ChatList extends Fragment {
                 classBtn.setText("Class " + classVal);
 
                 // Create layout params with margins
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(330, 170);
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(530, 170);
                 layoutParams.setMargins(20, 16, 16, 16); // Set margin values (left, top, right, bottom)
                 classBtn.setTextSize(15);
 
@@ -81,10 +85,10 @@ public class ChatList extends Fragment {
 
                 // Set the click listener for the button
                 classBtn.setOnClickListener(v -> {
-                    // Handle button click, e.g., navigate to class chat
-                    Intent intent = new Intent(getActivity(), Home.class);
-                    intent.putExtra("classVal", classVal);
-                    startActivity(intent);
+                    // Create an Intent to start the ChatActivity
+                    Intent chatIntent = new Intent(getActivity(), Chat.class);
+                    chatIntent.putExtra("classVal", classVal); // Pass the classVal
+                    startActivity(chatIntent); // Start the ChatActivity
                 });
 
                 // Add the button to the container

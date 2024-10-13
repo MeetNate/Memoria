@@ -3,7 +3,6 @@ package com.example.memoria;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -14,6 +13,9 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.navigation.NavigationBarView;
+
+import Helper.UserSession;
+import ReusableClass.navigationMenuBar;
 
 public class Home extends AppCompatActivity {
 

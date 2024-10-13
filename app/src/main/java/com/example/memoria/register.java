@@ -9,6 +9,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import Helper.FirestoreHelper;
+import Helper.ValidationHelper;
+
 public class register extends AppCompatActivity {
 
     private EditText name, password, email, phone;
@@ -35,20 +38,6 @@ public class register extends AppCompatActivity {
                 startActivity(new Intent(register.this, Signin.class));
             }
         });
-
-//        submit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String name_txt = name.getText().toString().trim();
-//                String email_txt = email.getText().toString().trim();
-//                String password_txt = password.getText().toString().trim();
-//                String phone_txt = phone.getText().toString().trim();
-//
-//                if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt, phone_txt)) {
-//                    firestoreHelper.checkUserExists(register.this, email_txt, name_txt, password_txt, phone_txt);
-//                }
-//            }
-//        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

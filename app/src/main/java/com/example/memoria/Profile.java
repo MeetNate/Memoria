@@ -1,9 +1,11 @@
 package com.example.memoria;
 
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -16,15 +18,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.view.View;
+import android.widget.Toast;
+
+import Helper.FirestoreHelper;
+import Helper.UserSession;
 
 public class Profile extends AppCompatActivity {
 
-    private TextView nameTextView, emailTextView, classTextView;
-    private TextView logoutTextView;
+    private TextView nameTextView, emailTextView, classTextView, classroomIdView; // Initialized classroomIdView
     private EditText editEmail, editClass, editName;
     private Button updateButton;
     private FirestoreHelper firestoreHelper;
-    private ImageButton backButton;
+    private ImageButton backButton, logoutButton;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -44,7 +49,8 @@ public class Profile extends AppCompatActivity {
         nameTextView = findViewById(R.id.name_profile);
         emailTextView = findViewById(R.id.email_profile);
         classTextView = findViewById(R.id.curr_class);
-        logoutTextView = findViewById(R.id.logout);
+        classroomIdView = findViewById(R.id.classroomId); // Initialize classroomIdView
+        logoutButton = findViewById(R.id.logout);
         updateButton = findViewById(R.id.updatebtn);
         editEmail = findViewById(R.id.editEmailView);
         editClass = findViewById(R.id.editClassView);
@@ -58,12 +64,13 @@ public class Profile extends AppCompatActivity {
         nameTextView.setText(userSession.getUserName());
         emailTextView.setText(userSession.getUserEmail());
         classTextView.setText(userSession.getClassVal()); // Using classVal method
+        classroomIdView.setText(userSession.getClassroomId()); // Display classroomId
 
         // Logout functionality
-        logoutTextView.setOnClickListener(v -> {
+        logoutButton.setOnClickListener(v -> {
             userSession.setUserName(null);
             userSession.setUserEmail(null);
-            userSession.setClassDetails(null, null); // Resetting class details
+            userSession.setClassDetails(null, null, null); // Resetting class details
 
             new AlertDialog.Builder(Profile.this)
                     .setTitle("Logout")
@@ -76,6 +83,23 @@ public class Profile extends AppCompatActivity {
                     })
                     .setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss())
                     .show();
+        });
+
+
+        // Copy classroom ID functionality
+        classroomIdView.setOnClickListener(v -> {
+            String classroomId = classroomIdView.getText().toString();
+
+            if (!classroomId.isEmpty()) {
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Classroom ID", classroomId);
+                clipboard.setPrimaryClip(clip);
+
+                // Provide feedback to the user
+                Toast.makeText(Profile.this, "Classroom ID copied to clipboard", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Profile.this, "No Classroom ID available to copy", Toast.LENGTH_SHORT).show();
+            }
         });
 
         // Update button functionality
@@ -100,8 +124,8 @@ public class Profile extends AppCompatActivity {
                 String updatedClass = editClass.getText().toString();
                 String updatedName = editName.getText().toString();
 
-                // Set the updated class details in UserSession (only classVal is stored)
-                userSession.setClassDetails(updatedClass, userSession.getAcademicYear()); // Only updating classVal
+                // Set the updated class details in UserSession (only classVal and classroomId are stored)
+                userSession.setClassDetails(updatedClass, userSession.getAcademicYear(), userSession.getClassroomId());
                 userSession.setUserEmail(updatedEmail);
                 userSession.setUserName(updatedName);
 
