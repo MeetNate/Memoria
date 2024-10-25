@@ -11,19 +11,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
 import com.google.android.material.navigation.NavigationBarView;
 
+import java.util.List;
+import java.util.Map;
+
+import Helper.ResultHelper;
 import Helper.UserSession;
 import ReusableClass.navigationMenuBar;
 
 public class Home extends AppCompatActivity {
 
     private ImageButton profileBtn;
-    NavigationBarView navigationMenu;
+    private NavigationBarView navigationMenu;
     private TextView academic_class, academic_year;
     private navigationMenuBar navigation;
-    UserSession userSession = UserSession.getInstance();
+    private UserSession userSession = UserSession.getInstance();
+    ResultHelper resultHelper = new ResultHelper(); // Create an instance of ResultHelper
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -46,9 +50,23 @@ public class Home extends AppCompatActivity {
         academic_year = findViewById(R.id.academic_year);
         navigation = new navigationMenuBar();
 
-        // Display data from UserSession
-        academic_class.setText(userSession.getClassVal());  // Update based on new class details method
-        academic_year.setText(userSession.getAcademicYear());  // Update based on new class details method
+        // Fetch class list from UserSession
+        List<Map<String, String>> classList = userSession.getClassList();
+
+        // Check if classList is not empty and fetch the first class details
+        if (classList != null && !classList.isEmpty()) {
+            Map<String, String> firstClass = classList.get(0); // Fetch 0th index data
+            String classVal = firstClass.get("classVal");
+            String academicYear = firstClass.get("academicYear");
+
+            // Display data in TextViews
+            academic_class.setText(classVal);
+            academic_year.setText(academicYear);
+        } else {
+            // Handle case when classList is empty
+            academic_class.setText("Create a new class");
+            academic_year.setText("Not available");
+        }
 
         // Profile button navigation
         profileBtn.setOnClickListener(v -> {
@@ -58,5 +76,7 @@ public class Home extends AppCompatActivity {
 
         // Initialize navigation menu
         navigation.menuBar(navigationMenu, Home.this);
+
     }
 }
+

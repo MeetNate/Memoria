@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_gravity="center"
+    android:background="@drawable/rounded_dialog_background">
+
+    <EditText
+        android:id="@+id/memoryNameEditText"
+        android:layout_width="325dp"
+        android:layout_height="47dp"
+        android:background="@drawable/rounded_edittext"
+        android:paddingLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Memory Name" />
+
+    <EditText
+        android:id="@+id/captionEditText"
+        android:layout_width="325dp"
+        android:layout_height="47dp"
+        android:background="@drawable/rounded_edittext"
+        android:paddingLeft="20dp"
+        android:layout_marginBottom="10dp"
+        android:hint="Caption" />
+
+
+        <ImageView
+            android:id="@+id/selectedImageView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            />
+
+    <Button
+        android:id="@+id/selectImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Select Image" />
+
+</LinearLayout>

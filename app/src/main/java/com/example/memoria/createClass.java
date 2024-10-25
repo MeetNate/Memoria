@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,19 +17,18 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Pattern;
 
-import Helper.FirestoreHelper;
+import Helper.ClassroomHelper;
 import Helper.UserSession;
+import Helper.ValidationHelper;
 
 public class createClass extends Fragment {
 
     private TextView classroomIdView;
     private EditText classNameEditText, academicYearEditText;
     private Button createClassButton;
-    private FirestoreHelper firestoreHelper;
     private UserSession userSession = UserSession.getInstance(); // Get the singleton instance
-
+    private ClassroomHelper classroomHelper = new ClassroomHelper();
     @SuppressLint("MissingInflatedId")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -41,14 +41,15 @@ public class createClass extends Fragment {
         createClassButton = view.findViewById(R.id.createClassButton);
         classroomIdView = view.findViewById(R.id.classId);
 
-        firestoreHelper = new FirestoreHelper();
 
         // Create new class logic
         createClassButton.setOnClickListener(v -> {
-            if (validateFields()) {
-                // Extracting className and academicYear
-                String className = classNameEditText.getText().toString().trim();
-                String academicYear = academicYearEditText.getText().toString().trim();
+            // Extracting className and academicYear
+            String className = classNameEditText.getText().toString().trim();
+            String academicYear = academicYearEditText.getText().toString().trim();
+
+            if (ValidationHelper.validateClassAndYear(getActivity(), className, academicYear)) {
+
 
                 classNameEditText.setText("");
                 academicYearEditText.setText("");
@@ -63,7 +64,7 @@ public class createClass extends Fragment {
                 }
 
                 // Check if the class already exists in Firestore using classVal and academicYear
-                firestoreHelper.checkClassExistsAndFetchIds(className, academicYear, (exists, existingClassroomIds) -> {
+                classroomHelper.checkClassExistsAndFetchIds(className, academicYear, (exists, existingClassroomIds) -> {
                     if (exists && !existingClassroomIds.isEmpty()) {
                         // Show a dialog for the user to select from existing classrooms
                         showClassroomSelectionDialog(existingClassroomIds);
@@ -72,7 +73,7 @@ public class createClass extends Fragment {
                         String classroomId = generateUniqueClassroomId(className, academicYear);
 
                         // Create new class
-                        firestoreHelper.createNewClass(getContext(), className, academicYear, classroomId);
+                        classroomHelper.createNewClass(getContext(), className, academicYear, classroomId);
                         showSuccessDialog("Class created successfully.");
 
                         // Optionally, you can also add the newly created class to the user's class list
@@ -84,8 +85,6 @@ public class createClass extends Fragment {
                     }
                 });
             }
-
-
         });
 
         // Set the listener for joining a class using classroom ID
@@ -94,36 +93,6 @@ public class createClass extends Fragment {
         return view;
     }
 
-    // Validation function for create new class
-    private boolean validateFields() {
-        String className = classNameEditText.getText().toString().trim();
-        String academicYear = academicYearEditText.getText().toString().trim();
-
-        if (className.isEmpty() || academicYear.isEmpty()) {
-            showErrorDialog("All fields are required.");
-            return false;
-        }
-
-        // Validate class value between 1 to 12
-        try {
-            int classVal = Integer.parseInt(className);
-            if (classVal < 1 || classVal > 12) {
-                showErrorDialog("Class value must be between 1 and 12.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            showErrorDialog("Class value must be a number.");
-            return false;
-        }
-
-        // Validate academic year format (e.g., 2020-21)
-        if (!Pattern.matches("\\d{4}-\\d{2}", academicYear)) {
-            showErrorDialog("Academic year must be in the format 'YYYY-YY' (e.g., 2020-21).");
-            return false;
-        }
-
-        return true;
-    }
 
     // Method to generate a unique classroom ID using classVal and academicYear
     private String generateUniqueClassroomId(String classVal, String academicYear) {
@@ -172,7 +141,7 @@ public class createClass extends Fragment {
             if (!classroomId.isEmpty()) {
                 if (isValidClassroomIdFormat(classroomId)) {
                     // Call FirestoreHelper to check if the classroomId exists
-                    firestoreHelper.getClassroomDetails(classroomId, classroomDetails -> {
+                    classroomHelper.getClassroomDetails(classroomId, classroomDetails -> {
                         if (classroomDetails != null) {
                             String classVal = classroomDetails.get("classVal");
                             String academicYear = classroomDetails.get("academicYear");
@@ -181,7 +150,7 @@ public class createClass extends Fragment {
                             userSession.addClassToList(classVal, academicYear, classroomId);
 
                             // Add class details to the user's database
-                            firestoreHelper.addClassToUserDatabase(userSession.getUserEmail(), classVal, academicYear, classroomId, success -> {
+                            classroomHelper.addClassToUserDatabase(userSession.getUserEmail(), classVal, academicYear, classroomId, success -> {
                                     showSuccessDialog("Class joined successfully and details saved.");
                             });
                         } else {
@@ -204,7 +173,17 @@ public class createClass extends Fragment {
 
     private void showClassroomSelectionDialog(List<String> existingClassroomIds) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("Classroom Exists");
+
+        // Create a custom TextView for the dialog title
+        TextView title = new TextView(getContext());
+        title.setText("Oops!! Classroom is already created by someone from your batch!\nClick on a link to copy!");
+        title.setPadding(50, 50, 50, 10); // Set padding (left, top, right, bottom) to provide some spacing
+        title.setTextSize(18); // Set text size
+        title.setTypeface(null, Typeface.BOLD); // Set text to bold
+
+
+        // Set the custom title view to the AlertDialog
+        builder.setCustomTitle(title);
 
         // Create a string array from existing classroom IDs
         String[] classroomIdsArray = existingClassroomIds.toArray(new String[0]);
@@ -218,7 +197,7 @@ public class createClass extends Fragment {
             copyToClipboard(selectedClassroomId);
 
             // Retrieve classroom details for the selected ID
-            firestoreHelper.getClassroomDetails(selectedClassroomId, classDetails -> {
+            classroomHelper.getClassroomDetails(selectedClassroomId, classDetails -> {
                 if (classDetails != null) {
                     String classVal = classDetails.get("classVal");
                     String academicYear = classDetails.get("academicYear");
@@ -227,20 +206,23 @@ public class createClass extends Fragment {
                     userSession.addClassToList(classVal, academicYear, selectedClassroomId);
 
                     // Save this class in the user's database
-                    firestoreHelper.addClassToUserDatabase(userSession.getUserEmail(), classVal, academicYear, selectedClassroomId, task -> {
+                    classroomHelper.addClassToUserDatabase(userSession.getUserEmail(), classVal, academicYear, selectedClassroomId, task -> {
                         if (task.isSuccessful()) {
-                            showSuccessDialog("Classroom is already created! Join using the link provided below: " + selectedClassroomId);
+                            showSuccessDialog("Enjoy chatting with your classmates!! \uD83E\uDD73");
                         } else {
-                            showErrorDialog("Failed to save class details.");
+                            showErrorDialog("Failed to save class details \uD83D\uDE15.");
                         }
                     });
                 } else {
-                    showErrorDialog("Classroom details not found.");
+                    showErrorDialog("Classroom details not found \uD83D\uDE15.");
                 }
             });
         });
 
+        // Add a "Cancel" button to dismiss the dialog
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        // Show the dialog
         builder.show();
     }
 
@@ -248,7 +230,7 @@ public class createClass extends Fragment {
         ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
         ClipData clip = ClipData.newPlainText("Classroom ID", text);
         clipboard.setPrimaryClip(clip);
-        showSuccessDialog("Classroom ID copied to clipboard: " + text); // Optional: Notify the user
+        showSuccessDialog("Classroom ID copied to clipboard.."); // Optional: Notify the user
     }
 
 

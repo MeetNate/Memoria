@@ -7,25 +7,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.TextView; // Import TextView
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 import java.util.Map;
 
+import Adapters.ClassButtonAdapter;
 import Helper.UserSession;
 
 public class ChatList extends Fragment {
 
-    private ImageButton profileBtn;
-    private LinearLayout classButtonContainer; // Container for class buttons
-    private Button classBtn; // Single Button instance
+    private RecyclerView recyclerView;
+    private ClassButtonAdapter adapter;
     private UserSession userSession = UserSession.getInstance();
+    private ImageButton profileBtn;
+    private TextView noClassesTextView; // Declare TextView for "Classes not available Yet"
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -34,11 +35,10 @@ public class ChatList extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chat_list, container, false);
 
+        recyclerView = view.findViewById(R.id.recyclerView); // Initialize the RecyclerView
         profileBtn = view.findViewById(R.id.profilebtn);
-        classButtonContainer = view.findViewById(R.id.classButtonContainer); // Initialize the button container
-
-        // Create class buttons dynamically
-        populateClassButtons();
+        noClassesTextView = view.findViewById(R.id.noClassesTextView); // Initialize TextView
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity())); // Set LayoutManager
 
         // Navigation to Profile
         profileBtn.setOnClickListener(v -> {
@@ -46,55 +46,30 @@ public class ChatList extends Fragment {
             startActivity(profileIntent);
         });
 
+        // Populate RecyclerView
+        populateClassButtons();
+
         return view; // Return the inflated view
     }
 
+    // Method to populate class buttons in RecyclerView
     private void populateClassButtons() {
         List<Map<String, String>> classList = userSession.getClassList();
 
-        // Debug: Check the size of the class list
-        Log.d("ChatList", "Number of classes: " + (classList != null ? classList.size() : 0));
-
-        // Clear any existing buttons
-        classButtonContainer.removeAllViews();
-
-        // Create a button for each class
+        // Check if classList is empty and update UI accordingly
         if (classList != null && !classList.isEmpty()) {
-            for (Map<String, String> classDetails : classList) {
-                String classVal = classDetails.get("classVal");
+            // Show the RecyclerView and hide the TextView
+            recyclerView.setVisibility(View.VISIBLE);
+            noClassesTextView.setVisibility(View.GONE);
 
-                // Debug: Log the class value
-                Log.d("ChatList", "Class Value: " + classVal);
-
-                // Create a new instance for classBtn for each iteration
-                classBtn = new Button(getActivity());
-
-                // Set text for classBtn
-                classBtn.setText("Class " + classVal);
-
-                // Create layout params with margins
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(530, 170);
-                layoutParams.setMargins(20, 16, 16, 16); // Set margin values (left, top, right, bottom)
-                classBtn.setTextSize(15);
-
-                // Set the layout parameters to the button
-                classBtn.setLayoutParams(layoutParams);
-
-                // Set the background to the rounded button drawable
-                classBtn.setBackgroundResource(R.drawable.rounded_button);
-
-                // Set the click listener for the button
-                classBtn.setOnClickListener(v -> {
-                    // Create an Intent to start the ChatActivity
-                    Intent chatIntent = new Intent(getActivity(), Chat.class);
-                    chatIntent.putExtra("classVal", classVal); // Pass the classVal
-                    startActivity(chatIntent); // Start the ChatActivity
-                });
-
-                // Add the button to the container
-                classButtonContainer.addView(classBtn);
-            }
+            // Create and set the adapter
+            adapter = new ClassButtonAdapter(getActivity(), classList);
+            recyclerView.setAdapter(adapter);
         } else {
+            // Hide the RecyclerView and show the TextView
+            recyclerView.setVisibility(View.GONE);
+            noClassesTextView.setVisibility(View.VISIBLE);
+
             // Debug: No classes available
             Log.d("ChatList", "No classes available in classList");
         }

@@ -10,14 +10,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import Helper.FirestoreHelper;
+import Helper.UserHelper;
 
 public class Signin extends AppCompatActivity {
     private EditText email, edtpass;
     private Button google_sigin, submit;
     private TextView create_new_account;
-    private FirestoreHelper firestoreHelper;
-
+    private UserHelper userHelper = new UserHelper();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +28,6 @@ public class Signin extends AppCompatActivity {
         google_sigin = findViewById(R.id.google_reg);
         create_new_account = findViewById(R.id.create_new_account_);
 
-        firestoreHelper = new FirestoreHelper(); // Initialize FirestoreHelper
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +40,7 @@ public class Signin extends AppCompatActivity {
                     return;
                 }
 
-                firestoreHelper.signInUser(Signin.this, username, password);
+                userHelper.signInUser(Signin.this, username, password);
                 clearFields();
             }
         });

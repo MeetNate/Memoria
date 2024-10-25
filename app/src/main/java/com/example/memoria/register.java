@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import Helper.FirestoreHelper;
+import Helper.UserHelper;
 import Helper.ValidationHelper;
 
 public class register extends AppCompatActivity {
@@ -18,7 +18,7 @@ public class register extends AppCompatActivity {
     private TextView already_have_account;
     private Button submit, google_reg;
 
-    private FirestoreHelper firestoreHelper = new FirestoreHelper();
+    private UserHelper userHelper = new UserHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +47,11 @@ public class register extends AppCompatActivity {
                 String password_txt = password.getText().toString().trim();
 
                 // Validate input fields
-                if (ValidationHelper.validateInputs(register.this, name_txt, email_txt, password_txt)) {
-                    // Create an intent to start the Details activity
-                    Intent intent = new Intent(register.this, Details.class);
-
-                    // Put the data into the intent as extras
-                    intent.putExtra("name", name_txt);
-                    intent.putExtra("email", email_txt);
-                    intent.putExtra("password", password_txt);
-
-                    // Start the Details activity
-                    startActivity(intent);
+                if (ValidationHelper.validateUserInputs(register.this, name_txt, email_txt, password_txt)) {
+                    userHelper.checkUserExists(register.this, email_txt, name_txt, password_txt);
                 }
             }
+
         });
 
     }
